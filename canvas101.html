@@ -1,52 +1,76 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Weather</title>
-    <style type="text/css">
-    canvas {
-        margin: 30px;
-        border: red solid 1px;
-    }
+    <title></title>
+    <style type="text/css" media="screen">
+        canvas{
+            border: red solid 1px;
+            margin: 30px;
+        }
     </style>
 </head>
-
 <body>
-    <canvas id="the-canvas" height="200px" width="200px">
-        <!-- our drawing goes here -->
-    </canvas>
+
+    <canvas id="the-canvas" height="500px" width="500px"><!--Our drawing will go here! --></canvas>
+
     <script type="text/javascript">
-    var canvas = document.getElementById('the-canvas');
-    var context = canvas.getContext('2d');
+        var canvas = document.getElementById('the-canvas');
+        var context = canvas.getContext('2d');
 
-    // context.beginPath(); //puts the brush on the page
-    // context.moveTo(50, 50); // X, Y Moves path to the specified point without creating a line.
-    // context.lineTo(100, 100);
-    // context.stroke();
-    var x = 150;
-    var y = 150;
-    var radius =10;
-    var endArc = 0;
-    var r = 0;
-    var g = 0;
-    var b = 0;
-    function draw() {
-      context.fillStyle = '#' + r + g + b;
-        context.clearRect(0, 0, 500, 500);
-        context.beginPath();
-        context.arc(x, y, radius, 0, Math.PI * 2);
-        context.fill();
-        x += 4;
-        y += 2;
-        radius += 1;
-        endArc += .1;
-        r++;
-        b++;
-    }
 
-    var ballInt = setInterval(draw, 10);
+            //Draw a star
+            // context.strokeStyle = "#00ff00";
+            // context.beginPath();
+            // context.moveTo(100,100);
+            // context.lineTo(200,200);
+            // context.lineTo(300,100);
+            // context.lineTo(100,200);
+            // context.lineTo(300,150);
+            // context.lineTo(100,100);
+            
+            // context.stroke();
+
+            //Draw a circle
+            // context.fillStyle = "#0000ff";
+            // context.beginPath();
+            // context.arc(175,175, 50, 0*Math.PI, 1.5*Math.PI);
+            // context.fill();
+
+
+            //draw a rectangle
+            // context.beginPath();
+            // context.rect(300,20, 100, 100);
+            // context.stroke();
+
+            var x = 150;
+            var y = 150;
+            var radius = 10;
+            var endArc = 0;
+            var r = 0;
+            var g = 0;
+            var b = 0
+
+            function draw(){
+                context.fillStyle = "#" + r + g + b;
+                context.clearRect(0,0, 500, 500)
+                context.beginPath();
+                context.arc(x,y, radius, 0, Math.PI*endArc);
+                context.fill();
+                x += 4;
+                y += 2;
+                radius += 1;
+                endArc += .1;
+                r++;
+                b++;
+            }
+
+
+            var ballInt = setInterval(draw, 40);
+
+
+
 
     </script>
-</body>
 
+</body>
 </html>
