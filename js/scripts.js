@@ -1,11 +1,30 @@
 $(document).ready(function() {
     var apiKey = '7496eb8b9ef9616cf145982ce0a992fe';
     var weatherURL = 'http://api.openweathermap.org/data/2.5/weather?q=Atlanta&units=imperial&APPID=' + apiKey;
+    var iconURL = 'http://openweathermap.org/img/w/';
 
     function convertUTCEpochToDate(epoch) {
         var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
         d.setUTCSeconds(epoch);
         return d;
+    }
+
+    function getCurrentDate() {
+        var m_names = ["Jan", "Feb", "Mar",
+            "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+            "Oct", "Nov", "Dec"];
+
+        var weekday = [
+          "Sunday", "Monday", "Tuesday", "Wednesday",
+          "Thursday", "Friday", "Saturday"
+        ];
+
+        var d = new Date();
+        var curr_date = d.getDate();
+        var curr_month = d.getMonth();
+        var curr_year = d.getFullYear();
+        var curr_wkday = d.getDay();
+        return  weekday[curr_wkday] + ' ' + m_names[curr_month] + ' ' + curr_date + ", " + curr_year;
     }
 
     //todo:  lookup jQuery ajaxComplete
@@ -21,10 +40,15 @@ $(document).ready(function() {
         var longitude = weatherData.coord.lon;
         var weatherDescription = weatherData.weather[0].description;
         var weatherMain = weatherData.weather[0].main;
-        var sunrise = weatherData.sys.sunrise;
-        var sunset = weatherData.sys.sunset;
+        var weatherIconURL = iconURL + weatherData.weather[0].icon + '.png';
+        var sunrise = weatherData.sys.sunrise; //seconds
+        var sunset = weatherData.sys.sunset; //seconds
         var country = weatherData.sys.country;
         // console.log(currTemp);s
+
+        $('#weather-icon').attr('src', weatherIconURL);
+        $('#weather-desc').html(weatherDescription);
+        $('#date').html(getCurrentDate());
 
         var canvas = $('#current-temp');
         var context = canvas[0].getContext('2d');
