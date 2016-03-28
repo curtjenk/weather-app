@@ -1,37 +1,33 @@
+var apiKey = '7496eb8b9ef9616cf145982ce0a992fe';
+var apiKeyParam = '&APPID=' + apiKey;
+var unitsParam =  '&units=imperial';
+var searchParam = '?q=';
+var weatherURL = 'http://api.openweathermap.org/data/2.5/weather';
+var iconURL = 'http://openweathermap.org/img/w/';
+
 $(document).ready(function() {
-    var apiKey = '7496eb8b9ef9616cf145982ce0a992fe';
-    var weatherURL = 'http://api.openweathermap.org/data/2.5/weather?q=Atlanta&units=imperial&APPID=' + apiKey;
-    var iconURL = 'http://openweathermap.org/img/w/';
+    $('#date').html(getCurrentDate());
 
-    function convertUTCEpochToDate(epoch) {
-        var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
-        d.setUTCSeconds(epoch);
-        return d;
-    }
+    $('#search-form').submit(function() {
+       event.preventDefault(); //don't let the form submit
+      console.log(event);
+      var inputCity = $('#search-val').val();
+      if (inputCity.length === 0) {
+        return;
+      }
+      search(inputCity);
+      
+    });
+    
 
-    function getCurrentDate() {
-        var m_names = ["Jan", "Feb", "Mar",
-            "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-            "Oct", "Nov", "Dec"];
+});
 
-        var weekday = [
-          "Sunday", "Monday", "Tuesday", "Wednesday",
-          "Thursday", "Friday", "Saturday"
-        ];
-
-        var d = new Date();
-        var curr_date = d.getDate();
-        var curr_month = d.getMonth();
-        var curr_year = d.getFullYear();
-        var curr_wkday = d.getDay();
-        return  weekday[curr_wkday] + ' ' + m_names[curr_month] + ' ' + curr_date + ", " + curr_year;
-    }
-
-    //todo:  lookup jQuery ajaxComplete
-    $.getJSON(weatherURL, function(weatherData) {
+function search(inputCity) {
+  var URL = weatherURL + searchParam + inputCity + unitsParam + apiKeyParam;
+  //todo:  lookup jQuery ajaxComplete
+    $.getJSON(URL, function(weatherData) {
         console.log(weatherData);
-        //we want the temperature for starters. The temperature in their JSON is at:
-        //weatherData.main.temp
+
         var currTemp = weatherData.main.temp;
         var maxTemp = weatherData.main.temp_max;
         var minTemp = weatherData.main.temp_min;
@@ -48,7 +44,8 @@ $(document).ready(function() {
 
         $('#weather-icon').attr('src', weatherIconURL);
         $('#weather-desc').html(weatherDescription);
-        $('#date').html(getCurrentDate());
+       
+        $('#country-city').html(country + '-' + inputCity);
 
         var canvas = $('#current-temp');
         var context = canvas[0].getContext('2d');
@@ -112,5 +109,28 @@ $(document).ready(function() {
         }
         animate();
     });
+}
+function convertUTCEpochToDate(epoch) {
+    var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+    d.setUTCSeconds(epoch);
+    return d;
+}
 
-});
+function getCurrentDate() {
+    var m_names = ["Jan", "Feb", "Mar",
+        "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+        "Oct", "Nov", "Dec"
+    ];
+
+    var weekday = [
+        "Sunday", "Monday", "Tuesday", "Wednesday",
+        "Thursday", "Friday", "Saturday"
+    ];
+
+    var d = new Date();
+    var curr_date = d.getDate();
+    var curr_month = d.getMonth();
+    var curr_year = d.getFullYear();
+    var curr_wkday = d.getDay();
+    return weekday[curr_wkday] + ' ' + m_names[curr_month] + ' ' + curr_date + ", " + curr_year;
+}

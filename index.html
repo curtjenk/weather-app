@@ -10,8 +10,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-12 text-right">
-                IT-Venice
+            <div id="country-city" class="col-md-12 text-right">
             </div>
         </div>
         <div class="row">
@@ -28,7 +27,6 @@
                 </div>
             </div>
             <div class="col-md-4">
-                Temperature
             </div>
         </div>
         <div class="row">
@@ -36,16 +34,18 @@
             </div>
             <div class="empty col-md-3">
             </div>
+        </div>
+        <div class="row">
             <div class="row search-row">
-                <div id="date" class="col-md-6">
+                <div id="date" class="col-md-3 col-md-offset-1">
                 </div>
-                <div class="col-md-6">
-                    <div class="col-xs-6">
+                <div class="col-md-4">
+                    <form id="search-form">
                         <div class="inner-addon right-addon">
                             <i class="glyphicon glyphicon-search"></i>
-                            <input type="text" class="form-control" />
+                            <input id="search-val" type="text" class="form-control" placeholder="Enter City Name" />
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
